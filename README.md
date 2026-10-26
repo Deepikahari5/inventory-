@@ -6,7 +6,7 @@ This version adds pagination, filtering, sorting and search for products, catego
 
 ## Project Structure
 
-```
+
 app/
   api/
     deps.py                 authentication, role checks, pagination and filter dependencies, service providers
