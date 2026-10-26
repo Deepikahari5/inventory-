@@ -1,0 +1,1344 @@
+{
+  "info": {
+    "name": "Inventory Management API - Pagination, Filtering, Sorting, Search",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "refresh_token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login as admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "Admin12345"
+                }
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const data = pm.response.json();",
+                  "pm.collectionVariables.set('access_token', data.access_token);",
+                  "pm.collectionVariables.set('refresh_token', data.refresh_token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login as manager",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "manager"
+                },
+                {
+                  "key": "password",
+                  "value": "Manager12345"
+                }
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const data = pm.response.json();",
+                  "pm.collectionVariables.set('access_token', data.access_token);",
+                  "pm.collectionVariables.set('refresh_token', data.refresh_token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login as employee",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "employee"
+                },
+                {
+                  "key": "password",
+                  "value": "Employee12345"
+                }
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const data = pm.response.json();",
+                  "pm.collectionVariables.set('access_token', data.access_token);",
+                  "pm.collectionVariables.set('refresh_token', data.refresh_token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Refresh token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/refresh",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}"
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const data = pm.response.json();",
+                  "pm.collectionVariables.set('access_token', data.access_token);",
+                  "pm.collectionVariables.set('refresh_token', data.refresh_token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Current user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}"
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "item": [
+        {
+          "name": "Products - first page (defaults)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Products - second page",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?page=2&page_size=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                },
+                {
+                  "key": "page_size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Products - page beyond records",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?page=999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "999"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Products - invalid page_size (422)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?page_size=101",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "page_size",
+                  "value": "101"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Products - invalid page (422)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?page=0",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Categories - paginated",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/categories?page=1&page_size=3",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "page_size",
+                  "value": "3"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Suppliers - paginated",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/suppliers?page=1&page_size=2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "suppliers"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "page_size",
+                  "value": "2"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Users - paginated (admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/users?page=1&page_size=5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "page_size",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filtering",
+      "item": [
+        {
+          "name": "By category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?category_id=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "category_id",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "By supplier",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?supplier_id=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "supplier_id",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "By price range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?min_price=50&max_price=200",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "min_price",
+                  "value": "50"
+                },
+                {
+                  "key": "max_price",
+                  "value": "200"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "By stock range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?min_quantity=10&max_quantity=40",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "min_quantity",
+                  "value": "10"
+                },
+                {
+                  "key": "max_quantity",
+                  "value": "40"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Inactive products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?is_active=false",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "is_active",
+                  "value": "false"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Needs restock",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?needs_restock=true",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "needs_restock",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Combined filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?category_id=1&min_price=50&max_price=300&min_quantity=5&is_active=true&sort_by=price&sort_order=desc&page=1&page_size=5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "category_id",
+                  "value": "1"
+                },
+                {
+                  "key": "min_price",
+                  "value": "50"
+                },
+                {
+                  "key": "max_price",
+                  "value": "300"
+                },
+                {
+                  "key": "min_quantity",
+                  "value": "5"
+                },
+                {
+                  "key": "is_active",
+                  "value": "true"
+                },
+                {
+                  "key": "sort_by",
+                  "value": "price"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "desc"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "page_size",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Inverted price range (422)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?min_price=500&max_price=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "min_price",
+                  "value": "500"
+                },
+                {
+                  "key": "max_price",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Search by partial name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/search?q=widg",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "widg"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search by partial SKU",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/search?q=sku-00",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "sku-00"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search by description",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/search?q=everyday",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "everyday"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search with filters and sorting",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/search?q=lamp&min_price=10&sort_by=price&sort_order=asc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "lamp"
+                },
+                {
+                  "key": "min_price",
+                  "value": "10"
+                },
+                {
+                  "key": "sort_by",
+                  "value": "price"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "asc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Blank search (422)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/search?q=%20%20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "%20%20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/categories?search=elec",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "elec"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search suppliers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/suppliers?search=acme",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "suppliers"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "acme"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Active suppliers only",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/suppliers?is_active=true",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "suppliers"
+              ],
+              "query": [
+                {
+                  "key": "is_active",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sorting",
+      "item": [
+        {
+          "name": "Name ascending",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?sort_by=name&sort_order=asc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "name"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "asc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Price descending",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?sort_by=price&sort_order=desc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "price"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Stock ascending",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?sort_by=quantity&sort_order=asc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "quantity"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "asc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Newest first",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?sort_by=created_at&sort_order=desc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "created_at"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Recently updated",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?sort_by=updated_at&sort_order=desc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "updated_at"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Unsupported sort field (422)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products?sort_by=password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "password"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Low Stock and Relations",
+      "item": [
+        {
+          "name": "Low-stock products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/low-stock",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "low-stock"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Low-stock in category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/low-stock?category_id=1&page_size=5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "low-stock"
+              ],
+              "query": [
+                {
+                  "key": "category_id",
+                  "value": "1"
+                },
+                {
+                  "key": "page_size",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Products in category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/categories/1/products?sort_by=price",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "price"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Products from supplier",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/suppliers/1/products?sort_by=name",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "suppliers",
+                "1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "name"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Management",
+      "item": [
+        {
+          "name": "Create product (manager/admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo Product\",\n  \"sku\": \"DEMO-001\",\n  \"description\": \"Created from Postman\",\n  \"price\": 49.99,\n  \"quantity\": 15,\n  \"reorder_level\": 10,\n  \"category_id\": 1,\n  \"supplier_id\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Update product (manager/admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 100\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete product (admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo Category\",\n  \"description\": \"Created from Postman\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create supplier",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/suppliers",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "suppliers"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo Supplier\",\n  \"email\": \"demo@supplier.com\",\n  \"phone\": \"555-0100\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
