@@ -195,6 +195,3 @@ The suite uses in-memory SQLite and covers: first and second page, page beyond t
 
 Postman: import `postman_collection.json`, run one of the login requests (it stores the token automatically), then use the folders Pagination, Filtering, Search, Sorting and Low Stock and Relations.
 
-## Screenshots
-
-Capture screenshots from Swagger UI (`/docs`) or Postman and save them in `screenshots/`: first page, second page, filtered results, sorted results, search results, and the `422` responses for invalid page size and sort field.
